@@ -16,3 +16,7 @@ Setting up the API
 - curl localhost:4000
 
 ## Setting up the FastAPI
+
+- explain the concept of A.I. streaming
+- set up streaming with FastAPI
+- https://github.com/github/gitignore/blob/main/Python.gitignore
