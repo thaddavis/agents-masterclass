@@ -28,6 +28,7 @@ https://stackoverflow.com/questions/72005302/completely-uninstall-python-3-on-ma
 ## How to run this API
 
 - LOCALLY: `uvicorn app.main:app --host 0.0.0.0 --port 80`
+- REBUILD DOCKET IMAGE: `docker build -t agent-api .`
 - IN DOCKER: `docker run -v $(pwd):/usr/src/app -p 4000:80 agent-api`
 
 ## Reference .devcontainer/devcontainer.json from Microsoft dev
