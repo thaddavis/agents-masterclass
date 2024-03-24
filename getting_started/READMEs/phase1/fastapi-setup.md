@@ -20,3 +20,7 @@ Setting up the API
 - explain the concept of A.I. streaming
 - set up streaming with FastAPI
 - https://github.com/github/gitignore/blob/main/Python.gitignore
+
+## Setting up debugging solution
+
+- @ext:ms-vscode-remote.remote-containers
