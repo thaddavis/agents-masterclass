@@ -1,0 +1,2 @@
+- https://formulae.brew.sh/formula/python@3.12
+- brew install python@3.12

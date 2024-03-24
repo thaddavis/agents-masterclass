@@ -2,6 +2,11 @@
 
 Setting up the API
 
+## Setting up virtualenv
+
+- https://virtualenv.pypa.io/en/latest/installation.html
+- virtualenv venv
+
 ## Create a Dockerfile
 
 - https://hub.docker.com/_/python
