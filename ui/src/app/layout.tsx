@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Agents Masterclass",
+  title: "Agents",
   description: "Made with ❤️ by COMMAND",
 };
 
@@ -16,16 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full bg-white">
-      <body className="h-full">
-        {/* <Providers
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        > */}
-        {children}
-        {/* </Providers> */}
-      </body>
+      <body className="h-full">{children}</body>
     </html>
   );
 }

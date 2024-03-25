@@ -13,6 +13,7 @@ import {
   BiWater,
 } from "react-icons/bi";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { VscTools } from "react-icons/vsc";
 
@@ -177,7 +178,9 @@ export default function Layout({
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
-              <span className="text-white">CMD</span>
+              <Link href={"/"}>
+                <span className="text-white cursor-pointer">CMD</span>
+              </Link>
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">

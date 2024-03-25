@@ -6,6 +6,7 @@ import Textarea from "react-textarea-autosize";
 import { ChatDispatchContext } from "@/app/masterclass/completion/ChatContext";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
 import { nanoid } from "@/lib/utils";
+import { callCompletionAgent } from "@/services/callCompletionAgent";
 import { useRouter } from "next/navigation";
 
 export function PromptForm({
@@ -31,33 +32,52 @@ export function PromptForm({
     <form
       ref={formRef}
       onSubmit={async (e: any) => {
-        e.preventDefault();
+        try {
+          e.preventDefault();
 
-        // Blur focus on mobile
-        if (window.innerWidth < 600) {
-          e.target["message"]?.blur();
+          // Blur focus on mobile
+          if (window.innerWidth < 600) {
+            e.target["message"]?.blur();
+          }
+
+          const value = input.trim();
+          setInput("");
+          if (!value) return;
+
+          dispatch({
+            type: "ADD_MESSAGE",
+            payload: {
+              id: nanoid(),
+              content: value,
+              role: "human",
+            },
+          });
+
+          dispatch({
+            type: "SET_COMPLETION_LOADING",
+            payload: true,
+          });
+
+          const resp = await callCompletionAgent(value);
+          const body = await resp.json();
+
+          dispatch({
+            type: "SET_COMPLETION_LOADING",
+            payload: false,
+          });
+
+          dispatch({
+            type: "ADD_MESSAGE",
+            payload: {
+              id: nanoid(),
+              content: body.completion,
+              role: "ai",
+            },
+          });
+        } catch (error) {
+          debugger;
+          console.error(error);
         }
-
-        const value = input.trim();
-        setInput("");
-        if (!value) return;
-
-        dispatch({
-          type: "ADD_MESSAGE",
-          payload: {
-            id: nanoid(),
-            content: value,
-            role: "human",
-          },
-        });
-        // Optimistically add user message UI
-        // setMessages((currentMessages) => [
-        //   ...currentMessages,
-        //   {
-        //     id: nanoid(),
-        //     display: <>{value}</>,
-        //   },
-        // ]);
       }}
     >
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background">

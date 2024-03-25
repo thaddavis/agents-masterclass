@@ -40,8 +40,14 @@ export function chatReducer(
         ],
       };
     }
+    case "SET_COMPLETION_LOADING": {
+      return {
+        ...state,
+        completionLoading: action.payload,
+      };
+    }
     default: {
-      throw Error("Unknown action: " + action.type);
+      throw Error("Unknown action type");
     }
   }
 }

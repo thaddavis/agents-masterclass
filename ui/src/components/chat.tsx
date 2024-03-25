@@ -5,19 +5,14 @@ import { ChatPanel } from "@/components/chat-panel";
 import { EmptyScreen } from "@/components/empty-screen";
 import { useScrollAnchor } from "@/lib/hooks/use-scroll-anchor";
 import { cn } from "@/lib/utils";
-import { usePathname, useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { ChatList } from "./chat-list";
 
 export interface ChatProps extends React.ComponentProps<"div"> {}
 
 export function Chat({ id, className }: ChatProps) {
-  const router = useRouter();
-  const path = usePathname();
   const [input, setInput] = useState("");
-
   const chatState = useContext(ChatContext);
-
   const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
     useScrollAnchor();
 
@@ -31,8 +26,10 @@ export function Chat({ id, className }: ChatProps) {
         ref={messagesRef}
       >
         {chatState.messages.length ? (
-          // true ? (
-          <ChatList messages={chatState.messages} />
+          <ChatList
+            messages={chatState.messages}
+            isCompletionLoading={chatState.completionLoading}
+          />
         ) : (
           <EmptyScreen />
         )}
