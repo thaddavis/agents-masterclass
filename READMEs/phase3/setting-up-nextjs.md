@@ -1,2 +1,2 @@
 - npx create-next-app@latest
-- npm i @headlessui/react @tailwindcss/forms @heroicons/react
+- npm i @headlessui/react @tailwindcss/forms @heroicons/react react-icons
