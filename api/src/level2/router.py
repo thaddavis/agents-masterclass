@@ -1,6 +1,7 @@
 import json
+from pydantic import BaseModel
 from fastapi import APIRouter
-from fastapi.responses import Response, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from langchain_anthropic import ChatAnthropic
 from langchain_core import load
 
@@ -18,15 +19,18 @@ async def streamer():
         yield chunk.content
 
 
-@router.get("/llm-stream")
+@router.get("/stream")
 async def get_stream():
     return StreamingResponse(streamer(), media_type="text/event-stream")
 
 
-@router.get("/prompt")
-def prompt():
+class Prompt(BaseModel):
+    content: str
+
+@router.post("/completion")
+def prompt(prompt: Prompt):
     llm = ChatAnthropic(
         model="claude-3-sonnet-20240229", temperature=0.2, max_tokens=1024
     )
-    completion = llm.invoke("Write a 2 line sonnet maximing financial potential.")
-    return Response(completion.content, media_type="text/plain")
+    completion = llm.invoke(prompt.content)
+    return JSONResponse({"completion": completion.content})
