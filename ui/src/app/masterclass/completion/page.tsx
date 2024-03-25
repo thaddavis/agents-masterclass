@@ -1,12 +1,23 @@
+"use client";
+
+import {
+  chatReducer,
+  initialState,
+} from "@/app/masterclass/completion/ChatReducer";
 import { Chat } from "@/components/chat";
-import { AI } from "@/lib/chat/actions";
+import { useReducer } from "react";
+import { ChatContext, ChatDispatchContext } from "./ChatContext";
 
 export default function Page() {
+  const [chat, dispatch] = useReducer(chatReducer, initialState);
+
   return (
     <>
-      <AI initialAIState={{ messages: [] }}>
-        <Chat />
-      </AI>
+      <ChatContext.Provider value={chat}>
+        <ChatDispatchContext.Provider value={dispatch}>
+          <Chat />
+        </ChatDispatchContext.Provider>
+      </ChatContext.Provider>
     </>
   );
 }

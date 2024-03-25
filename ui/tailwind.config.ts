@@ -13,6 +13,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      lineHeight: {
+        "extra-loose": "2.5",
+        "12": "4rem",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],

@@ -3,13 +3,10 @@
 import * as React from "react";
 import Textarea from "react-textarea-autosize";
 
-import { useActions, useUIState } from "ai/rsc";
-
-import { type AI } from "@/lib/chat/actions";
+import { ChatDispatchContext } from "@/app/masterclass/completion/ChatContext";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
-import { nanoid } from "nanoid";
+import { nanoid } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { UserMessage } from "./stocks/message";
 
 export function PromptForm({
   input,
@@ -21,8 +18,8 @@ export function PromptForm({
   const router = useRouter();
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
-  const { submitUserMessage } = useActions();
-  const [_, setMessages] = useUIState<typeof AI>();
+
+  const dispatch = React.useContext(ChatDispatchContext);
 
   React.useEffect(() => {
     if (inputRef.current) {
@@ -45,18 +42,22 @@ export function PromptForm({
         setInput("");
         if (!value) return;
 
-        // Optimistically add user message UI
-        setMessages((currentMessages) => [
-          ...currentMessages,
-          {
+        dispatch({
+          type: "ADD_MESSAGE",
+          payload: {
             id: nanoid(),
-            display: <UserMessage>{value}</UserMessage>,
+            content: value,
+            role: "human",
           },
-        ]);
-
-        // Submit and get response message
-        // const responseMessage = await submitUserMessage(value);
-        // setMessages((currentMessages) => [...currentMessages, responseMessage]);
+        });
+        // Optimistically add user message UI
+        // setMessages((currentMessages) => [
+        //   ...currentMessages,
+        //   {
+        //     id: nanoid(),
+        //     display: <>{value}</>,
+        //   },
+        // ]);
       }}
     >
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background">
@@ -65,7 +66,7 @@ export function PromptForm({
           tabIndex={0}
           onKeyDown={onKeyDown}
           placeholder="Send a message."
-          className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] sm:text-sm"
+          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           autoFocus
           spellCheck={false}
           autoComplete="off"
