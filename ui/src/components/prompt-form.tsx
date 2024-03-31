@@ -3,7 +3,7 @@
 import * as React from "react";
 import Textarea from "react-textarea-autosize";
 
-import { ChatDispatchContext } from "@/app/masterclass/completion/ChatContext";
+import { ChatDispatchContext } from "@/app/agents/completion/ChatContext";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
 import { nanoid } from "@/lib/utils";
 import { callCompletionAgent } from "@/services/callCompletionAgent";

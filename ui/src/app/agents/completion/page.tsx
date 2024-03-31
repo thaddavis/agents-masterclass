@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  chatReducer,
-  initialState,
-} from "@/app/masterclass/completion/ChatReducer";
+import { chatReducer, initialState } from "@/app/agents/completion/ChatReducer";
 import { Chat } from "@/components/chat";
 import { useReducer } from "react";
 import { ChatContext, ChatDispatchContext } from "./ChatContext";

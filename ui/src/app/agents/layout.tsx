@@ -13,45 +13,46 @@ import {
   BiWater,
 } from "react-icons/bi";
 
+import { FaPeopleGroup } from "react-icons/fa6";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { VscTools } from "react-icons/vsc";
 
 const navigation = [
   {
     name: "Completion Agent",
-    href: "/masterclass/completion",
+    href: "/agents/completion",
     icon: BiChat,
     current: true,
   },
   {
     name: "Streaming Agent",
-    href: "/masterclass/streaming",
+    href: "/agents/streaming",
     icon: BiWater,
     current: false,
   },
   {
     name: "R.A.G. Agent",
-    href: "/masterclass/rag",
+    href: "/agents/rag",
     icon: BiQuestionMark,
     current: false,
   },
   {
     name: "ReAct Agent",
-    href: "/masterclass/react",
+    href: "/agents/react",
     icon: BiBrain,
     current: false,
   },
   {
     name: "Plan & Execute Agent",
-    href: "/masterclass/plan-execute",
+    href: "/agents/plan-execute",
     icon: BiCalendar,
     current: false,
   },
   {
-    name: "LangSmith",
-    href: "/masterclass/langsmith",
-    icon: VscTools,
+    name: "Agent Swarms",
+    href: "/agents/swarms",
+    icon: FaPeopleGroup,
     current: false,
   },
 ];

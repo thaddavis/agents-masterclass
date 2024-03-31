@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatContext } from "@/app/masterclass/completion/ChatContext";
+import { ChatContext } from "@/app/agents/completion/ChatContext";
 import { ChatPanel } from "@/components/chat-panel";
 import { EmptyScreen } from "@/components/empty-screen";
 import { useScrollAnchor } from "@/lib/hooks/use-scroll-anchor";
