@@ -5,7 +5,7 @@ import { ChatPanel } from "@/components/chat-panel";
 import { EmptyScreen } from "@/components/empty-screen";
 import { useScrollAnchor } from "@/lib/hooks/use-scroll-anchor";
 import { cn } from "@/lib/utils";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ChatList } from "./chat-list";
 
 export interface ChatProps extends React.ComponentProps<"div"> {}
@@ -15,6 +15,10 @@ export function Chat({ id, className }: ChatProps) {
   const chatState = useContext(ChatContext);
   const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
     useScrollAnchor();
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatState.messages, scrollToBottom]);
 
   return (
     <div

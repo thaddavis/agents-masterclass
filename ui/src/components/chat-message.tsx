@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Message } from "@/ts/types/Message";
-import { BiBrain, BiUser } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
+import { GiArtificialIntelligence } from "react-icons/gi";
+
 import Markdown from "react-markdown";
 import { Separator } from "./ui/separator";
 
@@ -28,7 +30,11 @@ export const ChatMessage = (P: P) => {
               `${P.message.error && "text-red-600"}`
             )}
           >
-            {P.message.role === "human" ? <BiUser /> : <BiBrain color="blue" />}
+            {P.message.role === "human" ? (
+              <BiUser />
+            ) : (
+              <GiArtificialIntelligence color="blue" />
+            )}
           </div>
           <div
             className={cn(
