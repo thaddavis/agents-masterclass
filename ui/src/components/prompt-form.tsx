@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Textarea from "react-textarea-autosize";
 
 import { ChatDispatchContext } from "@/app/agents/completion/ChatContext";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
@@ -22,34 +21,36 @@ export function PromptForm({
 
   const dispatch = React.useContext(ChatDispatchContext);
 
-  React.useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (inputRef.current) {
+  //     inputRef.current.focus();
+  //   }
+  // }, []);
 
   return (
     <form
       ref={formRef}
       onSubmit={async (e: any) => {
+        const humanMessageId = nanoid();
+        const value = input.trim();
         try {
           e.preventDefault();
 
           // Blur focus on mobile
-          if (window.innerWidth < 600) {
-            e.target["message"]?.blur();
-          }
+          // if (window.innerWidth < 600) {
+          //   e.target["message"]?.blur();
+          // }
 
-          const value = input.trim();
           setInput("");
           if (!value) return;
 
           dispatch({
             type: "ADD_MESSAGE",
             payload: {
-              id: nanoid(),
+              id: humanMessageId,
               content: value,
               role: "human",
+              error: null,
             },
           });
 
@@ -72,27 +73,38 @@ export function PromptForm({
               id: nanoid(),
               content: body.completion,
               role: "ai",
+              error: null,
             },
           });
         } catch (error) {
-          debugger;
+          dispatch({
+            type: "SET_COMPLETION_LOADING",
+            payload: false,
+          });
+          dispatch({
+            type: "EDIT_MESSAGE",
+            payload: {
+              id: humanMessageId,
+              error: error,
+            },
+          });
           console.error(error);
         }
       }}
     >
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background">
-        <Textarea
+        <textarea
           ref={inputRef}
-          tabIndex={0}
+          // tabIndex={0}
           onKeyDown={onKeyDown}
           placeholder="Send a message."
           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          autoFocus
+          // autoFocus
           spellCheck={false}
           autoComplete="off"
           autoCorrect="off"
           name="message"
-          rows={1}
+          rows={3}
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />

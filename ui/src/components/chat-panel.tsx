@@ -15,6 +15,9 @@ export function ChatPanel({ input, setInput }: ChatPanelProps) {
       <div className="mx-auto lg:pl-72 lg:max-w-[calc(100%-18rem)]">
         <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
           <PromptForm input={input} setInput={setInput} />
+          <p className="text-muted-foreground px-2 text-center text-xs leading-normal hidden sm:block">
+            Made with ❤️ by COMMAND
+          </p>
         </div>
       </div>
     </div>

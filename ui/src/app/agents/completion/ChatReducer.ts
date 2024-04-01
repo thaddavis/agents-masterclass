@@ -1,27 +1,38 @@
-type ActionMap<M extends { [index: string]: any }> = {
-  [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
-};
+// type ActionMap<M extends { [index: string]: any }> = {
+//   [Key in keyof M]: M[Key] extends undefined
+//     ? {
+//         type: Key;
+//       }
+//     : {
+//         type: Key;
+//         payload: M[Key];
+//       };
+// };
+
+import { Message } from "@/ts/types/Message";
 
 export type Action =
   | {
       type: "ADD_MESSAGE";
-      payload: { id: string; role: "human" | "ai"; content: string };
+      payload: Message;
     }
   | {
       type: "SET_COMPLETION_LOADING";
       payload: boolean;
+    }
+  | {
+      type: "EDIT_MESSAGE";
+      payload: {
+        id: string;
+        role?: "human" | "ai";
+        content?: string;
+        error?: any;
+      };
     };
 
 export function chatReducer(
   state: {
-    messages: { id: string; role: "human" | "ai"; content: string }[];
+    messages: Message[];
     completionLoading: boolean;
   },
   action: Action
@@ -36,7 +47,23 @@ export function chatReducer(
             id: action.payload.id,
             content: action.payload.content,
             role: action.payload.role,
+            error: action.payload.error,
           },
+        ],
+      };
+    }
+    case "EDIT_MESSAGE": {
+      const index = state.messages.findIndex((m) => m.id === action.payload.id);
+
+      return {
+        ...state,
+        messages: [
+          ...state.messages.slice(0, index),
+          {
+            ...state.messages[index],
+            ...action.payload,
+          },
+          ...state.messages.slice(index + 1),
         ],
       };
     }
@@ -53,7 +80,7 @@ export function chatReducer(
 }
 
 export const initialState: {
-  messages: { id: string; role: "human" | "ai"; content: string }[];
+  messages: Message[];
   completionLoading: boolean;
 } = {
   messages: [],

@@ -1,12 +1,9 @@
+import { Message } from "@/ts/types/Message";
 import { ChatMessage } from "./chat-message";
 
 export interface P {
   isCompletionLoading: boolean;
-  messages: {
-    id: string;
-    content: string;
-    role: "human" | "ai";
-  }[];
+  messages: Message[];
 }
 
 export function ChatList(P: P) {
@@ -16,20 +13,9 @@ export function ChatList(P: P) {
 
   return (
     <div className="relative mx-auto max-w-2xl px-4">
-      {P.messages.map(
-        (
-          message: {
-            id: string;
-            content: string;
-            role: "human" | "ai";
-          },
-          index: number
-        ) => {
-          return (
-            <ChatMessage key={message.id} index={index} message={message} />
-          );
-        }
-      )}
+      {P.messages.map((message: Message, index: number) => {
+        return <ChatMessage key={message.id} index={index} message={message} />;
+      })}
 
       {P.isCompletionLoading && (
         <>

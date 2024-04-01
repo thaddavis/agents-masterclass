@@ -2,7 +2,7 @@ import assert from "assert";
 
 export async function callCompletionAgent(prompt: string) {
   const resp = await fetch(
-    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/completion`,
+    `${process.env.NEXT_PUBLIC_AGENT_API_URL}/lvl1/completion`,
     {
       method: "POST",
       headers: {

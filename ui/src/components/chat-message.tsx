@@ -1,15 +1,12 @@
 import { cn } from "@/lib/utils";
+import { Message } from "@/ts/types/Message";
 import { BiBrain, BiUser } from "react-icons/bi";
 import Markdown from "react-markdown";
 import { Separator } from "./ui/separator";
 
 interface P {
   index: number;
-  message: {
-    id: string;
-    content: string;
-    role: "human" | "ai";
-  };
+  message: Message;
 }
 
 export const ChatMessage = (P: P) => {
@@ -27,15 +24,18 @@ export const ChatMessage = (P: P) => {
               "flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow",
               P.message.role === "human"
                 ? "bg-background"
-                : "bg-primary text-primary-foreground"
+                : "bg-primary text-primary-foreground",
+              `${P.message.error && "text-red-600"}`
             )}
           >
             {P.message.role === "human" ? <BiUser /> : <BiBrain color="blue" />}
           </div>
           <div
-            className={`flex-1 px-1 space-y-2 overflow-hidden ${
-              P.message.role === "human" ? "ml-4" : "mr-4"
-            }`}
+            className={cn(
+              `px-1 space-y-2 overflow-hidden`,
+              P.message.role === "human" ? "ml-4" : "mr-4",
+              P.message.error && "text-red-600"
+            )}
           >
             <Markdown>{P.message.content}</Markdown>
           </div>
